@@ -7,6 +7,7 @@ from app.schema import all_todo, individual_todo
 app = FastAPI()
 router=APIRouter()
 
+# Creating a TODO
 @router.post("/create-todo")
 async def create_todo(new_task:Todo):
     try:
@@ -15,6 +16,7 @@ async def create_todo(new_task:Todo):
     except Exception as e:
         raise HTTPException(status_code=500,detail=f"Some Error Occurred {e}")
 
+# read All TODO
 @router.get("/")
 async def get_all_todos():
     if await collection.count_documents({}) == 0:
@@ -22,6 +24,7 @@ async def get_all_todos():
     todos=await collection.find().to_list(length=1000)    
     return all_todo(todos)
 
+# read TODO By id
 @router.get("/todo/{id}")
 async def get_todo_by_id(id:str):
     try:
@@ -32,6 +35,7 @@ async def get_todo_by_id(id:str):
     except Exception as e:
         raise HTTPException(status_code=500,detail=f"Something Went Wrong => {e}")
 
+# Update TODO by id
 @router.put("/update-todo/{id}")
 async def update_todo(id:str,update_todo:Todo):
     try:
@@ -54,6 +58,7 @@ async def update_todo(id:str,update_todo:Todo):
     except Exception as e:
         raise HTTPException(status_code=500,detail=f"Something Went Wrong => {e}")
 
+# Delete TODO by id
 @router.delete("/del-todo/{id}")
 async def del_todo(id:str):
     try:
@@ -64,7 +69,8 @@ async def del_todo(id:str):
         return{"message":"Deleted successfully"}    
     except Exception as e:
         raise HTTPException(status_code=500,detail=f"Something Went Wrong => {e}")
-    
+
+ # Delete all TODO
 @router.delete("/delete-all")
 async def delete_all_todo():
     try:
