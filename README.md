@@ -17,7 +17,7 @@ A simple FastAPI project to learn & experiment with building REST APIs using Pyt
 2. **Create Virtual Environment**
 
    ```bash
-   python3 -m venv venv
+   python -m venv venv
    source venv/Scripts/activate
 
 3. **Install Dependencies**
