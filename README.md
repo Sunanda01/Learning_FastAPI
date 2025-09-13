@@ -2,7 +2,7 @@
 A simple FastAPI project to learn & experiment with building REST APIs using Python and FastAPI.
 
 ## Features
-- Basic CRUD / REST endpoints
+- Basic CRUD endpoints
 - Use of FastAPI, Pydantic models
 - Interactive API docs (Swagger UI / ReDoc)
 
