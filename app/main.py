@@ -1,8 +1,9 @@
-from fastapi import FastAPI,APIRouter,HTTPException
+from fastapi import FastAPI,APIRouter,HTTPException,status
 from app.config import collection
 from app.models import Todo
 from bson import ObjectId
 from app.schema import all_todo, individual_todo
+from fastapi.responses import JSONResponse
 
 app = FastAPI()
 router=APIRouter()
@@ -16,8 +17,20 @@ async def create_todo(new_task:Todo):
     except Exception as e:
         raise HTTPException(status_code=500,detail=f"Some Error Occurred {e}")
 
+# Health Check
+@router.get('/')
+def health_checkup():
+    return JSONResponse(
+        status_code=status.HTTP_200_OK,
+        content={
+            "status_code":status.HTTP_200_OK,
+            "status":"OK",
+            "message":"FastAPI server is healthy"
+        }
+    )
+
 # read All TODO
-@router.get("/")
+@router.get("/get-todo")
 async def get_all_todos():
     if await collection.count_documents({}) == 0:
         return{"message":"TodoList is Empty!!!!!!!!!!!!!"}
